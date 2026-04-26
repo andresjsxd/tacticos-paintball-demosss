@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tacticos Paintball Cali | Demo Web</title>
+  <style>
+    :root {
+      --bg: #0e120f;
+      --bg-soft: #151b16;
+      --panel: rgba(22, 28, 23, 0.82);
+      --panel-strong: rgba(30, 39, 31, 0.92);
+      --line: rgba(177, 189, 149, 0.18);
+      --text: #edf0e7;
+      --muted: #a8b09f;
+      --accent: #d7b877;
+      --accent-strong: #f0cb82;
+      --olive: #87906f;
+      --shadow: 0 24px 60px rgba(0, 0, 0, 0.34);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --max: 1180px;
+      --nav-height: 76px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(215, 184, 119, 0.12), transparent 30%),
+        radial-gradient(circle at 85% 15%, rgba(135, 144, 111, 0.14), transparent 25%),
+        linear-gradient(180deg, #0a0d0b 0%, #101511 40%, #0d110e 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 90%);
+      opacity: 0.45;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 96px 0;
+      position: relative;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--accent);
+      font-size: 0.82rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 18px rgba(240, 203, 130, 0.65);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      height: var(--nav-height);
+      backdrop-filter: blur(18px);
+      background: rgba(9, 11, 10, 0.7);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .nav {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background:
+        linear-gradient(135deg, rgba(215, 184, 119, 0.2), rgba(135, 144, 111, 0.15)),
+        url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizdQ00Jmth2v-D0uLo5pN4FldBnqNP4j5ZTsE3dkZY-xCoTN_-NwSeKqbVx3r-NIv-iMSn6CCnIiavc9X3dG-upFprO1DSA_9JdbI4f27cxkXThhRJCvq6aK9ODtlpEGWJrqjUaHrJQkQ/s752/vaso+tacticos.jpg") center/cover;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.07);
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.78rem;
+      margin-top: 4px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .button,
+    .button-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 20px;
+      border-radius: 999px;
+      font-weight: 600;
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+    }
+
+    .button {
+      color: #15120a;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      box-shadow: 0 12px 30px rgba(215, 184, 119, 0.22);
+    }
+
+    .button-secondary {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text);
+    }
+
+    .button:hover,
+    .button-secondary:hover {
+      transform: translateY(-2px);
+    }
+
+    .menu-button {
+      display: none;
+      border: 0;
+      background: transparent;
+      color: var(--text);
+      font-size: 1.7rem;
+      padding: 0;
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 72px 0 90px;
+      min-height: calc(100vh - var(--nav-height));
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 34px;
+      align-items: center;
+    }
+
+    .hero h2 {
+      margin: 20px 0 18px;
+      font-size: clamp(2.7rem, 5vw, 5.7rem);
+      line-height: 0.94;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      max-width: 10ch;
+    }
+
+    .hero p {
+      max-width: 620px;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--muted);
+      margin: 0 0 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 720px;
+    }
+
+    .stat {
+      padding: 18px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.035);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.2rem;
+      margin-bottom: 6px;
+      color: var(--accent);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 680px;
+    }
+
+    .panel-float,
+    .hero-card,
+    .hero-strip {
+      position: absolute;
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: var(--panel);
+    }
+
+    .hero-card img,
+    .hero-strip img,
+    .panel-float img {
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      padding: 18px;
+      background: linear-gradient(180deg, rgba(17, 22, 18, 0.9), rgba(17, 22, 18, 0.98));
+    }
+
+    .hero-card {
+      inset: 0 0 80px 60px;
+    }
+
+    .hero-strip {
+      width: 230px;
+      height: 270px;
+      left: 0;
+      bottom: 0;
+    }
+
+    .panel-float {
+      width: 240px;
+      height: 180px;
+      right: 16px;
+      top: 42px;
+      background: linear-gradient(180deg, rgba(17, 22, 18, 0.82), rgba(17, 22, 18, 0.95));
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .panel-float strong {
+      display: block;
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+
+    .panel-float p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.9rem;
+    }
+
+    .hero-badge {
+      position: absolute;
+      right: 38px;
+      bottom: 30px;
+      max-width: 270px;
+      background: rgba(10, 12, 10, 0.76);
+      padding: 20px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-badge strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.82rem;
+    }
+
+    .hero-badge p {
+      margin: 0;
+      color: var(--text);
+      line-height: 1.6;
+      font-size: 0.92rem;
+    }
+
+    .section-title {
+      margin: 18px 0 16px;
+      font-size: clamp(2rem, 3vw, 3.5rem);
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      max-width: 12ch;
+    }
+
+    .section-intro {
+      max-width: 680px;
+      line-height: 1.8;
+      color: var(--muted);
+      font-size: 1rem;
+      margin: 0;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+      gap: 26px;
+      margin-top: 34px;
+    }
+
+    .story-card,
+    .story-photo,
+    .product-card,
+    .category-card,
+    .gallery-card,
+    .contact-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .story-card {
+      padding: 30px;
+    }
+
+    .story-card p {
+      margin: 0 0 18px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .story-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 24px;
+    }
+
+    .point {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .point strong {
+      display: block;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .story-photo {
+      min-height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .story-photo img {
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      padding: 20px;
+      background: linear-gradient(180deg, rgba(17, 22, 18, 0.92), rgba(17, 22, 18, 0.98));
+    }
+
+    .story-photo::after {
+      content: "Hecho por pedido";
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(12, 14, 12, 0.76);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      color: var(--accent);
+    }
+
+    .products-grid,
+    .categories-grid,
+    .gallery-grid {
+      display: grid;
+      gap: 20px;
+      margin-top: 34px;
+    }
+
+    .products-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .product-card {
+      overflow: hidden;
+    }
+
+    .product-image {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(17, 22, 18, 0.9), rgba(17, 22, 18, 0.98));
+    }
+
+    .product-image img {
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      padding: 18px;
+      transition: transform 280ms ease;
+    }
+
+    .product-card:hover .product-image img {
+      transform: scale(1.04);
+    }
+
+    .product-copy {
+      padding: 26px;
+    }
+
+    .product-copy h3,
+    .category-card h3,
+    .contact-card h3 {
+      margin: 0 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 1.15rem;
+    }
+
+    .product-copy p,
+    .category-card p,
+    .contact-card p {
+      margin: 0;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .product-tag {
+      display: inline-flex;
+      margin-bottom: 16px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(215, 184, 119, 0.08);
+      color: var(--accent);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .categories-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .category-card {
+      padding: 26px;
+      min-height: 100%;
+    }
+
+    .category-card strong {
+      display: inline-block;
+      margin-top: 18px;
+      color: var(--accent);
+      font-size: 0.84rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: start;
+    }
+
+    .gallery-card {
+      overflow: hidden;
+      position: relative;
+      padding: 16px;
+      background: linear-gradient(180deg, rgba(17, 22, 18, 0.9), rgba(17, 22, 18, 0.98));
+    }
+
+    .gallery-card img {
+      height: auto;
+      object-fit: contain;
+      object-position: center center;
+      transition: transform 280ms ease, filter 280ms ease;
+      filter: saturate(0.95) contrast(1.05);
+      border-radius: 16px;
+      background: #121712;
+    }
+
+    .gallery-card:hover img {
+      transform: scale(1.04);
+      filter: saturate(1.05) contrast(1.08);
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+      gap: 20px;
+      margin-top: 34px;
+    }
+
+    .contact-card {
+      padding: 30px;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .contact-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 16px;
+      padding: 15px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .contact-item:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .contact-item span {
+      color: var(--muted);
+    }
+
+    .contact-item strong {
+      color: var(--text);
+    }
+
+    .contact-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .contact-photo {
+      min-height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .contact-photo img {
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
+      padding: 20px;
+      background: linear-gradient(180deg, rgba(17, 22, 18, 0.9), rgba(17, 22, 18, 0.98));
+    }
+
+    .contact-overlay {
+      position: absolute;
+      inset: auto 20px 20px 20px;
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(9, 11, 10, 0.76);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+    }
+
+    .contact-overlay strong {
+      display: block;
+      color: var(--accent);
+      margin-bottom: 8px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
+
+    .contact-overlay p {
+      margin: 0;
+      line-height: 1.6;
+      color: var(--text);
+      font-size: 0.94rem;
+    }
+
+    .footer {
+      padding: 26px 0 42px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .footer-bar {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      padding-top: 18px;
+    }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 650ms ease, transform 650ms ease;
+    }
+
+    [data-reveal].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .story-grid,
+      .contact-wrap,
+      .products-grid,
+      .categories-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 560px;
+      }
+
+      .hero-card {
+        inset: 0 24px 80px 24px;
+      }
+
+      .hero-strip {
+        left: 16px;
+      }
+
+      .panel-float {
+        right: 24px;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .site-header {
+        height: auto;
+      }
+
+      .nav {
+        min-height: var(--nav-height);
+        flex-wrap: wrap;
+        padding: 14px 0;
+      }
+
+      .menu-button {
+        display: inline-flex;
+      }
+
+      .nav-links {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: 12px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .hero {
+        padding-top: 36px;
+      }
+
+      .hero h2,
+      .section-title {
+        max-width: none;
+      }
+
+      .hero-stats,
+      .story-points {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        min-height: 470px;
+      }
+
+      .hero-card {
+        inset: 0 0 90px 0;
+      }
+
+      .hero-strip {
+        width: 150px;
+        height: 185px;
+        left: 10px;
+      }
+
+      .panel-float {
+        width: 190px;
+        height: auto;
+        top: 14px;
+        right: 10px;
+      }
+
+      .hero-badge {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        margin-top: 16px;
+        max-width: none;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+        grid-auto-rows: 240px;
+      }
+
+      .gallery-card.tall,
+      .gallery-card.wide {
+        grid-column: auto;
+        grid-row: auto;
+      }
+
+      .contact-item {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="#inicio">
+        <div class="brand-mark" aria-hidden="true"></div>
+        <div>
+          <h1>Tacticos Paintball Cali</h1>
+          <span>Chalecos, accesorios y equipo táctico por pedido</span>
+        </div>
+      </a>
+      <button class="menu-button" type="button" aria-label="Abrir menú" data-menu-button>☰</button>
+      <nav class="nav-links" data-nav-links>
+        <a href="#linea">Línea táctica</a>
+        <a href="#productos">Productos</a>
+        <a href="#galeria">Galería</a>
+        <a href="#contacto">Contacto</a>
+        <a class="button" href="https://wa.me/573128662491" target="_blank" rel="noreferrer">WhatsApp</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div data-reveal>
+          <span class="eyebrow">Equipo táctico en Cali</span>
+          <h2>Hecho para jugar duro y cargar mejor</h2>
+          <p>
+            Demo visual para una tienda táctica de paintball y airsoft con presencia más fuerte, más clara y más actual.
+            La idea es mostrar cómo la marca puede verse premium usando sus propios productos, fotos reales y llamados directos a WhatsApp.
+          </p>
+          <div class="hero-actions">
+            <a class="button" href="https://wa.me/573128662491" target="_blank" rel="noreferrer">Cotizar por WhatsApp</a>
+            <a class="button-secondary" href="#productos">Ver línea táctica</a>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>Por pedido</strong>
+              <span>Fabricación en el color que el cliente necesite.</span>
+            </div>
+            <div class="stat">
+              <strong>Molle modular</strong>
+              <span>Configuración adaptable para juego, entrenamiento y carga.</span>
+            </div>
+            <div class="stat">
+              <strong>Atención directa</strong>
+              <span>Contacto inmediato con César Calderón por WhatsApp.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual" data-reveal>
+          <div class="hero-card">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEh5Z9QX9Cr0IaoVa0s9Yt7g8usLgj4hEfGxPft2VqMrvU7fENczi-Va_LzJroNvSWKnVx9tZO2DuuFkv4xxJD6WOVDJvnb6CXRC6v-ESsnV06uv4Yve4ciNEasCtnPnDpbUbsLpyjUBwPVq5SM14iobo5ZBpUWvMFjiAyaw-Gvk9VUveepmaLNkwo_SEk8=s752" alt="Pechera chaleco asalt 3">
+          </div>
+          <div class="hero-strip">
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjUfQFhMnffbIbB6NLRZjiZbVMFYMSm0KbfCSiLMInZY5gsVaMdwGuHtjHT_fNCDcIhQr8cIEMNBpqysnUVDqZMjxA5CT0nCrppA-UHcCIyHlOICEjAukL3AJNXBefD_77QvYKE710AOtvYFieklVHD6lJyNTR2zLOmYqmLV3E6D9WZsr6IiG1ZPl_nuuc=s442" alt="Chaleco pechera molle asalt 2">
+          </div>
+          <div class="panel-float">
+            <strong>Línea táctica artesanal</strong>
+            <p>Chalecos, porta placas, cinturones, pouches y accesorios pensados para rendimiento y ajuste real.</p>
+          </div>
+          <div class="hero-badge">
+            <strong>Presencia digital renovada</strong>
+            <p>Hola cesar, dejo este mensaje para que veas como quedaria tu web/demo, espero te guste</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="linea">
+      <div class="container">
+        <span class="eyebrow" data-reveal">La marca</span>
+        <h2 class="section-title" data-reveal">Táctico, modular y fabricado según necesidad</h2>
+        <p class="section-intro" data-reveal>
+          Tacticos Paintball Cali trabaja con una propuesta muy clara: fabricar y adaptar equipo táctico resistente,
+          configurable y útil para paintball, airsoft y entrenamiento. La ventaja comercial está en mostrarlo mejor,
+          ordenar el catálogo y llevar cada visita a una conversación directa.
+        </p>
+
+        <div class="story-grid">
+          <article class="story-card" data-reveal>
+            <p>
+              Los chalecos JPC, CIRAS y FSBE destacan por su sistema molle, su capacidad de carga y sus ajustes en hombros, laterales y espalda.
+              Son productos con un valor técnico claro, pero hoy están escondidos dentro de una web que no los vende visualmente.
+            </p>
+            <p>
+              Una landing bien planteada permite presentar materiales, modularidad, accesorios incluidos y fabricación por encargo de forma
+              mucho más convincente, especialmente para clientes que llegan desde Facebook o WhatsApp.
+            </p>
+            <div class="story-points">
+              <div class="point">
+                <strong>Hecho a medida</strong>
+                Colores, hebillas y configuración adaptados a cada pedido.
+              </div>
+              <div class="point">
+                <strong>Sistema molle</strong>
+                Versatilidad para mover, quitar o sumar bolsillos y accesorios.
+              </div>
+              <div class="point">
+                <strong>Lonas resistentes</strong>
+                Construcción pensada para uso real y trabajo de campo.
+              </div>
+              <div class="point">
+                <strong>Venta conversacional</strong>
+                La web puede empujar la compra hacia WhatsApp con mucho menos fricción.
+              </div>
+            </div>
+          </article>
+
+          <figure class="story-photo" data-reveal>
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEig-qx_GXywTcx59UIxGmSpj0w39Sk1DIb4OYL-QwTyqL4sfPeNOZWzKMxfJvo-ibyNfYNbSa78JC2wYz3woYR9bNFTkJlH4tsYA4We_Od98wZDBzpU8JXoOVwn9p8DDMl02Dn13TZQzVe7Hf1D_kHa0ZSCUxRj9vyUlVFZgQYOdIAwjiKIOJVUZ5vw=s442" alt="Chaleco JPC con accesorios">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="productos">
+      <div class="container">
+        <span class="eyebrow" data-reveal">Productos destacados</span>
+        <h2 class="section-title" data-reveal">Una línea táctica que merece mejor vitrina</h2>
+        <p class="section-intro" data-reveal>
+          Esta sección ordena la oferta principal en bloques claros. Es la diferencia entre ver fotos sueltas y entender qué vende la marca.
+        </p>
+
+        <div class="products-grid">
+          <article class="product-card" data-reveal>
+            <div class="product-image">
+              <img src="https://blogger.googleusercontent.com/img/a/AVvXsEj7jpQBNjCVz9-AvVLEqoScRnvw0SSYpdj1Mz5xpnVHrledml3bPuzAzOVKULHJ9HasDXqlejfmxStNUGYZ9xvriJnbyTGmySF3tZJJz6e881w8qpaw29Tt-XTWwdNyPS3Zuiww-iavs7vLBMFvyDdkxQZJ794N-cYDkfbWbFUhRi_4SKfAPhz_pwDv=s442" alt="Chaleco JPC-ASALT 2">
+            </div>
+            <div class="product-copy">
+              <span class="product-tag">Chaleco JPC</span>
+              <h3>Jump Plate Carrier</h3>
+              <p>
+                Uno de los porta placas más ligeros. Su gran valor está en la versatilidad: tiras molle en laterales y frente para montar
+                pouches, accesorios y configuración según el rol del jugador.
+              </p>
+            </div>
+          </article>
+
+          <article class="product-card" data-reveal>
+            <div class="product-image">
+              <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhFY2UO6jCul3uRqouVMaoJt2NGaVikgx06pgUD7tWdI0gHVuar0VqyZ3nuifOp-Z8Rqehub4Yi_aREPLDubC5wbFBo2DfPZNGIJ3rZC2ss8MM0SVb9TLeFisc44aSKrLnXEuZhOsBMknZXAyiA7fC7unvY6qkbnIgrDr2boQu-d5tTPlVDXuOJVmiT=s442" alt="Chaleco táctico CIRAS">
+            </div>
+            <div class="product-copy">
+              <span class="product-tag">Chaleco CIRAS</span>
+              <h3>Carga completa y ajuste robusto</h3>
+              <p>
+                Más superficie molle, más capacidad de carga y ajuste en altura y anchura. Ideal para quienes necesitan un sistema más amplio
+                para portar mags, radio, botiquín, porta mapa y más accesorios.
+              </p>
+            </div>
+          </article>
+
+          <article class="product-card" data-reveal>
+            <div class="product-image">
+              <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi6F5GOjVBK12yLXyopacUrE47FkfVuNzBRW3g1GNsPzS6Wf-98dBek7l6VgZR_sf2iJvRSuuad7f5YdhOdelUwuG4LVRRXHzNHYYFq-rFuI8VLHXj_tqS9davLkXEPEqe-SHp06bzl18s/s442/Porta+placa+4.jpg" alt="Chaleco FSBE">
+            </div>
+            <div class="product-copy">
+              <span class="product-tag">Chaleco FSBE</span>
+              <h3>Ligero, firme y configurable</h3>
+              <p>
+                Ajuste en hombros y laterales con velcros y cintas de seguridad. Estructura liviana con buena rigidez y base modular para
+                modificar la distribución de pouches o sumar nuevas piezas con el tiempo.
+              </p>
+            </div>
+          </article>
+
+          <article class="product-card" data-reveal>
+            <div class="product-image">
+              <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh8rEhF6P-UTV0O1Bg_PXDDpIoGhP5g6tMZBquTS6jD6LkGXjfoO6KMndbIeyqGZtoBjpBv5YZsaOyZOFLVjVOdWYQq-Cwb8VHsiMZ3qCHrlQuGs5z_BbC6x66hRhRL8z968Qozsm8gfTM/s442/20170720_144727.jpg" alt="Cinturón de primera línea">
+            </div>
+            <div class="product-copy">
+              <span class="product-tag">Primera línea</span>
+              <h3>Cinturón de ataque</h3>
+              <p>
+                Opción ligera para francotiradores o configuraciones móviles. Permite acoplar bolsillos sobre un panel molle en cintura y
+                combinarlo con otros chalecos cuando hace falta una línea extra de carga.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <span class="eyebrow" data-reveal">Accesorios</span>
+        <h2 class="section-title" data-reveal">Más allá del chaleco</h2>
+        <p class="section-intro" data-reveal>
+          Una web bien presentada también ayuda a vender complementos y a subir el ticket promedio con accesorios visibles.
+        </p>
+
+        <div class="categories-grid">
+          <article class="category-card" data-reveal>
+            <h3>Pouches y porta mag</h3>
+            <p>Configuraciones para mags, tacpods, radio, botiquín, mapa, pipeta y transporte táctico según la misión o el tipo de partida.</p>
+            <strong>Modular y reconfigurable</strong>
+          </article>
+          <article class="category-card" data-reveal>
+            <h3>Bolsos y utilitarios</h3>
+            <p>Bolso táctico, porta botella, porta fusil y otras piezas que amplían el uso del equipo sin romper la estética ni la función.</p>
+            <strong>Ensamble por necesidad</strong>
+          </article>
+          <article class="category-card" data-reveal>
+            <h3>Colores y herrajes</h3>
+            <p>Hebilla metálica o plástica según preferencia, y fabricación en el color requerido para conservar identidad o camuflaje.</p>
+            <strong>Personalización directa</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="galeria">
+      <div class="container">
+        <span class="eyebrow" data-reveal">Galería real</span>
+        <h2 class="section-title" data-reveal">Fotos existentes, mejor presentadas</h2>
+        <p class="section-intro" data-reveal>
+          Aquí no se inventa nada: son fotos reales del negocio, pero organizadas para que transmitan producto, detalle y variedad.
+        </p>
+
+        <div class="gallery-grid">
+          <figure class="gallery-card" data-reveal>
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEg5X6FqjiVu6szWvn5YKPcq79UwYC6VvTltufU_cjBjaCjWpes8aHEkx1rm2_GgK04olMA3wMwnOe9ipa22LFQgBHABtAlWJz1byh-FpA0YZsVDvvzAUQ5MJM8J_j2crpToIbiTE9WObcHdKNWqiUS7XzT0JG7Hrs2JbLtBHG63CMZxdbil6Bh3wjgp=s442" alt="Chaleco JPC-ASALT 1 tácticos">
+          </figure>
+          <figure class="gallery-card" data-reveal>
+            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEig-qx_GXywTcx59UIxGmSpj0w39Sk1DIb4OYL-QwTyqL4sfPeNOZWzKMxfJvo-ibyNfYNbSa78JC2wYz3woYR9bNFTkJlH4tsYA4We_Od98wZDBzpU8JXoOVwn9p8DDMl02Dn13TZQzVe7Hf1D_kHa0ZSCUxRj9vyUlVFZgQYOdIAwjiKIOJVUZ5vw=s442" alt="Chaleco JPC con accesorios">
+          </figure>
+          <figure class="gallery-card" data-reveal>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj3jBDj5fy1nZ9a5rsqIw-U1ANlTXVmnZan8jRDHCa5cz0LS8de4MdqfEXz8q5GcGi1xLTchiB5tpYxr1qVbJtbNiYR4N4pJczBp1EvPJgrvfr3CSisUJVMVOu1XGof5hnsIsZ0XVYhXow/s302/IMG_20210822_205624.jpg" alt="Chaleco Ciras para pod">
+          </figure>
+          <figure class="gallery-card" data-reveal>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjfVltse7PNySQ_UbAcdN3qUmbLmGbDuSmpb25MqAX1Ji3tvK9zrqnfDLESJdm9mz_CD_IHudP6okcFEfospFaDO9Qi0p8BIkrLpTE5NZw8nhdr8CX-zbgye6DzOjJXoyfdQrqzmgGPalI/s336/IMG_20210822_205640.jpg" alt="Ciras parte trasera">
+          </figure>
+          <figure class="gallery-card" data-reveal>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgMi21D3zUs2in19CJNvAYDZSm5mJTCe0g1AmNnDu_gQWfCDfI1133uNNQIVTjtmxuwMI_Dp4WIZ9DccEgWeLpNJV6MpLGnbaPmI55WXSdqKPVhRSkK99zKOCkmi7IqBQ1pWhWs7L6TMUw/s318/20190326_062753.jpg" alt="Paintball chest Ciras">
+          </figure>
+          <figure class="gallery-card" data-reveal>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijf99BAFEq2ttEGzfUKCyNiM2aaRaUDfQXBga-Pi4QOCZJtE5Y3dXGdZidVLMDhgSd7PvEJyJYwPaSB-nQNsa51jPQl2HnZNefRUd53JCFugRd-8bO6X4wVT2OSRlX7Ch7MJnb9qILPKM/s442/Porta+placa+10.jpg" alt="Bolso táctico molle">
+          </figure>
+          <figure class="gallery-card" data-reveal>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8ITZSN97X43xNB2_mm57_gNpdgiObRtHVRTQ3fMcO0KgzeWgnI-2Y3P0gnII3Ffng1jXm1UtMx2aT6xWHE4QVSw2VPM82jxTOdKP9Fyql2reOcUYfAPLVrirnmY3YieDZ20p1i5RYlQ4/s404/20160229_103948-1.jpg" alt="Porta magazine">
+          </figure>
+          <figure class="gallery-card" data-reveal>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgmGCnHi2CRL0ZZIE3sJaJkB73_RDTJK4RQwmYIYfsykXMComFKkdm9638kcRtJVRear4BW2R56V7BQbeA5r2aRBr2Pi_fa35nx1ctX2hoSJqrA-MTxNJHG8RDOIOMF8PShBK3F33bm32k/s333/porta+botella.jpg" alt="Porta botella">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contacto">
+      <div class="container">
+        <span class="eyebrow" data-reveal">Contacto</span>
+        <h2 class="section-title" data-reveal">Cerrar ventas con menos fricción</h2>
+        <p class="section-intro" data-reveal>
+          El objetivo final de esta demo no es solo verse mejor. Es hacer que cualquier persona interesada pase de mirar fotos a escribir de inmediato.
+        </p>
+
+        <div class="contact-wrap">
+          <article class="contact-card" data-reveal>
+            <h3>César Calderón</h3>
+            <p>
+              Atención directa para cotizaciones, fabricación por encargo y preguntas sobre chalecos, porta placas, accesorios y configuraciones tácticas.
+            </p>
+            <div class="contact-list">
+              <div class="contact-item">
+                <span>WhatsApp</span>
+                <strong><a href="https://wa.me/573128662491" target="_blank" rel="noreferrer">312 866 24 91</a></strong>
+              </div>
+              <div class="contact-item">
+                <span>Celular</span>
+                <strong><a href="tel:+573128662491">312 866 24 91</a></strong>
+              </div>
+              <div class="contact-item">
+                <span>Email</span>
+                <strong><a href="mailto:cesarcalderon2006@gmail.com">cesarcalderon2006@gmail.com</a></strong>
+              </div>
+              <div class="contact-item">
+                <span>Facebook</span>
+                <strong>Tacticos Paintball-Cali</strong>
+              </div>
+            </div>
+            <div class="contact-cta">
+              <a class="button" href="https://wa.me/573128662491" target="_blank" rel="noreferrer">Pedir información</a>
+              <a class="button-secondary" href="mailto:cesarcalderon2006@gmail.com">Escribir por email</a>
+            </div>
+          </article>
+
+          <figure class="contact-photo" data-reveal>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhHgzCk6OTM9MpMkbOc6TL7HSQaygyLauM8ZqaohKflacP8pDUYrGQVTL7NtCGWel6hkbzj_oK1kASgpukGUrJhut8hdEgUdB5OTy3PCzznsIa34SvuQhCgHGDVJtNYMc2lgE8Oq2UPka8/s402/Modo+1.jpg" alt="Sistema de cierre delantero">
+          <div class="contact-overlay">
+              <strong>Demo comercial</strong>
+              <p>
+                Esta propuesta está pensada para que puedas mostrarle a tus clientes potenciales cómo se vería tu catálogo con una presentación más profesional, usando tus propias fotos y destacando lo que realmente vendes.
+              </p>
+            </div>
+          </figure>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-bar">
+      <span>Demo conceptual para Tacticos Paintball Cali.</span>
+      <span>Usa imágenes reales del negocio enlazadas desde sus assets actuales.</span>
+    </div>
+  </footer>
+
+  <script>
+    const revealItems = document.querySelectorAll("[data-reveal]");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.16 });
+
+    revealItems.forEach((item, index) => {
+      item.style.transitionDelay = `${Math.min(index * 45, 220)}ms`;
+      observer.observe(item);
+    });
+
+    const menuButton = document.querySelector("[data-menu-button]");
+    const navLinks = document.querySelector("[data-nav-links]");
+
+    if (menuButton && navLinks) {
+      menuButton.addEventListener("click", () => {
+        navLinks.classList.toggle("open");
+      });
+
+      navLinks.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => navLinks.classList.remove("open"));
+      });
+    }
+  </script>
+</body>
+</html>
